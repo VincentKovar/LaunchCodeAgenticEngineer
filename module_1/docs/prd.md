@@ -3,7 +3,9 @@ This workflow reviews a repository’s Docker setup by running the documented bu
 Trigger: A developer invokes claude "Review this repo's Docker setup and report whether it's ready to proceed" from the repo root.
 
 Decision Events:
-If the Docker build succeeds, the agent summarizes any warnings and recommends proceeding.
+If the Docker build succeeds with no warnings, the agent recommends proceeding.
+
+If the Docker build succeeds with warnings, the agent recommends proceeding but flags the warnings for review.
 
 If the Docker build fails, the agent reports the error output and recommends against proceeding. It does not attempt a fix.
 
@@ -22,6 +24,8 @@ Actions:
 
 Acceptance criteria:
 The agent correctly identifies whether the Docker image was built successfully or failed.
+
+The agent explicitly reports which build command it identified and where it found it, and confirms the build was actually executed.
 
 The summary includes all warnings and errors present in the build output; it does not omit any.
 
